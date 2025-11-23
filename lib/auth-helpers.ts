@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/client"
-import { createClient as createServerClient } from "@/lib/supabase/server"
 
 export async function signUpStudent(
   email: string,
@@ -67,7 +66,7 @@ export async function signOut() {
 }
 
 export async function getCurrentUser() {
-  const supabase = createServerClient()
+  const supabase = createClient()
 
   try {
     const {
@@ -82,7 +81,7 @@ export async function getCurrentUser() {
 }
 
 export async function getUserProfile(userId: string) {
-  const supabase = createServerClient()
+  const supabase = createClient()
 
   try {
     const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single()
