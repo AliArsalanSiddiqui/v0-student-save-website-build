@@ -3,63 +3,84 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Dark Purple/Navy Theme from Second Image */
 :root {
-  --background: #0f0728;
+  /* StudentSave Purple Dark Aesthetic */
+  --background: #080121;
   --foreground: #ffffff;
-  --card: #1a0f3a;
+  --card: #120239;
   --card-foreground: #ffffff;
-  --popover: #1a0f3a;
+  --popover: #120239;
   --popover-foreground: #ffffff;
-  --primary: #a78bfa;
+  /* Primary: Bold Purple */
+  --primary: #4a1985;
   --primary-foreground: #ffffff;
-  --secondary: #ec4899;
+  /* Secondary: Deep Navy */
+  --secondary: #260656;
   --secondary-foreground: #ffffff;
-  --muted: #2d1b4e;
+  --muted: #1f2937;
   --muted-foreground: #9ca3af;
-  --accent: #8b5cf6;
-  --accent-foreground: #ffffff;
+  /* Accent: Light Lavender */
+  --accent: #a580ca;
+  --accent-foreground: #080121;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #2d1b4e;
-  --input: #2d1b4e;
-  --ring: #a78bfa;
-  --chart-1: #2596be;
-  --chart-2: #ec4899;
-  --chart-3: #f59e0b;
-  --chart-4: #8b5cf6;
-  --chart-5: #10b981;
-  --radius: 0.5rem;
+  --border: #1f2937;
+  --input: #1f2937;
+  --ring: #a580ca;
+  --chart-1: #4a1985;
+  --chart-2: #a580ca;
+  --chart-3: #260656;
+  --chart-4: #120239;
+  --chart-5: #080121;
+  --radius: 0.625rem;
+  --sidebar: #080121;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #a580ca;
+  --sidebar-primary-foreground: #080121;
+  --sidebar-accent: #4a1985;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1f2937;
+  --sidebar-ring: #a580ca;
 }
 
 .dark {
-  --background: #0f0728;
+  --background: #080121;
   --foreground: #ffffff;
-  --card: #1a0f3a;
+  --card: #120239;
   --card-foreground: #ffffff;
-  --popover: #1a0f3a;
+  --popover: #120239;
   --popover-foreground: #ffffff;
-  --primary: #a78bfa;
+  --primary: #4a1985;
   --primary-foreground: #ffffff;
-  --secondary: #ec4899;
+  --secondary: #260656;
   --secondary-foreground: #ffffff;
-  --muted: #2d1b4e;
+  --muted: #1f2937;
   --muted-foreground: #9ca3af;
-  --accent: #8b5cf6;
-  --accent-foreground: #ffffff;
+  --accent: #a580ca;
+  --accent-foreground: #080121;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #2d1b4e;
-  --input: #2d1b4e;
-  --ring: #a78bfa;
-  --chart-1: #2596be;
-  --chart-2: #ec4899;
-  --chart-3: #f59e0b;
-  --chart-4: #8b5cf6;
-  --chart-5: #10b981;
+  --border: #1f2937;
+  --input: #1f2937;
+  --ring: #a580ca;
+  --chart-1: #a580ca;
+  --chart-2: #4a1985;
+  --chart-3: #260656;
+  --chart-4: #120239;
+  --chart-5: #080121;
+  --sidebar: #080121;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #a580ca;
+  --sidebar-primary-foreground: #080121;
+  --sidebar-accent: #4a1985;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1f2937;
+  --sidebar-ring: #a580ca;
 }
 
 @theme inline {
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -88,16 +109,23 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
   * {
     border-color: var(--border);
+    outline-color: rgb(from var(--ring) r g b / 0.5);
   }
-  
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
@@ -130,7 +158,7 @@ textarea {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  opacity: 0.8;
+  background: var(--accent);
 }
 
 /* Utility classes */
@@ -139,7 +167,7 @@ textarea {
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, var(--accent), #ff8a65);
+  background: linear-gradient(135deg, var(--accent), var(--primary));
 }
 
 .glass {
@@ -165,7 +193,8 @@ textarea {
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .btn-secondary {
@@ -183,7 +212,7 @@ textarea {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
