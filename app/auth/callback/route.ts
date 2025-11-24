@@ -17,27 +17,44 @@ export async function GET(request: Request) {
         // Check if profile exists
         const { data: existingProfile } = await supabase
           .from('profiles')
-          .select('id')
+          .select('id, is_verified, email')
           .eq('id', user.id)
           .single()
 
-        // Create profile if it doesn't exist
         if (!existingProfile) {
+          // Create new profile with email verified status
           await supabase.from('profiles').insert({
             id: user.id,
             email: user.email,
             full_name: user.user_metadata.full_name || '',
             university: user.user_metadata.university || '',
             user_type: user.user_metadata.user_type || 'student',
-            is_verified: true,
+            is_verified: true, // Auto-verify email confirmation
           })
         } else {
-          // Update verification status
-          await supabase
-            .from('profiles')
-            .update({ is_verified: true })
-            .eq('id', user.id)
+          // Update existing profile to verified if email is confirmed
+          if (!existingProfile.is_verified && user.email_confirmed_at) {
+            await supabase
+              .from('profiles')
+              .update({ 
+                is_verified: true,
+                updated_at: new Date().toISOString()
+              })
+              .eq('id', user.id)
+          }
         }
+
+        // Log the verification activity
+        await supabase.from('activity_logs').insert({
+          user_id: user.id,
+          action: 'email_verified',
+          entity_type: 'profile',
+          entity_id: user.id,
+          details: {
+            email: user.email,
+            verified_at: new Date().toISOString()
+          }
+        })
       }
     }
   }
